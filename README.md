@@ -5,10 +5,7 @@ REST API sederhana untuk layanan **pencatatan peminjaman buku perpustakaan**. Di
 siap di-*deploy* ke **Vercel**.
 
 > **Link Deployment (Vercel):**
-> `https://perpustakaan-api.vercel.app`
->
-> ⚠️ Status 01-10-2026: URL di atas **belum live** (`DEPLOYMENT_NOT_FOUND` saat dicek
-> `/health`). Lakukan deploy ulang sesuai **Bagian 7**, lalu URL ini akan aktif.
+> `https://perpustakaan-api-delta.vercel.app`
 >
 > **Link Repository GitHub:**
 > `https://github.com/Bringg07/perpustakaan-api`
@@ -158,7 +155,7 @@ kebijakan RLS, dan **7 baris data contoh**.
 ## 5. Dokumentasi Endpoint
 
 **Base URL lokal:** `http://localhost:3000`
-**Base URL produksi:** `https://perpustakaan-api.vercel.app`
+**Base URL produksi:** `https://perpustakaan-api-delta.vercel.app`
 
 > Seluruh endpoint tersedia di **root** (`/loans`) **dan** dengan prefiks **`/api`**
 > (`/api/loans`). Gunakan salah satu; keduanya memberikan hasil yang sama.
@@ -540,7 +537,7 @@ Import file **`postman/perpustakaan-api.postman_collection.json`** ke Postman.
 Koleksi ini berisi **11 request** siap pakai untuk seluruh endpoint.
 Ubah variabel koleksi `baseUrl` sesuai target:
 - Lokal  : `http://localhost:3000`
-- Vercel : `https://perpustakaan-api.vercel.app`
+- Vercel : `https://perpustakaan-api-delta.vercel.app`
 
 Request **Buat Peminjaman** otomatis menyimpan `id` hasil response ke variabel
 `loanId`, sehingga request Detail / Perbarui / Hapus bisa langsung dijalankan.
@@ -561,7 +558,7 @@ Request **Buat Peminjaman** otomatis menyimpan `id` hasil response ke variabel
    | `SUPABASE_SERVICE_ROLE_KEY` | *(opsional)* service role key |
    | `AUTO_SYNC_OVERDUE` | `true` |
 4. Klik **Deploy**. Tunggu hingga selesai.
-5. Vercel memberi URL produksi, mis. `https://perpustakaan-api.vercel.app`.
+5. Vercel memberi URL produksi, mis. `https://perpustakaan-api-delta.vercel.app`.
 
 ### Cara 2 — Lewat Vercel CLI
 ```bash
@@ -584,8 +581,8 @@ aplikasi Express:
 
 ### Verifikasi setelah deploy
 ```bash
-curl https://perpustakaan-api.vercel.app/health
-curl https://perpustakaan-api.vercel.app/loans?status=Terlambat
+curl https://perpustakaan-api-delta.vercel.app/health
+curl https://perpustakaan-api-delta.vercel.app/loans?status=Terlambat
 ```
 
 ---
