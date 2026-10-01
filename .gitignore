@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+package-lock.json.bak
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Vercel
+.vercel
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

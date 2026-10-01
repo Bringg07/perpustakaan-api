@@ -1,0 +1,195 @@
+{
+  "info": {
+    "_postman_id": "b7f3c1a2-4d5e-4f60-9a1b-2c3d4e5f6a7b",
+    "name": "Perpustakaan API - Peminjaman Buku",
+    "description": "Koleksi pengujian REST API pencatatan peminjaman buku perpustakaan.\n\nUbah variabel `baseUrl` sesuai kebutuhan:\n- Lokal  : http://localhost:3000\n- Vercel : https://NAMA-PROYEK.vercel.app",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "loanId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        },
+        "description": "Memastikan API berjalan."
+      }
+    },
+    {
+      "name": "List Peminjaman (semua)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/loans?page=1&limit=10",
+          "host": ["{{baseUrl}}"],
+          "path": ["loans"],
+          "query": [
+            { "key": "page", "value": "1" },
+            { "key": "limit", "value": "10" }
+          ]
+        },
+        "description": "Mengambil daftar peminjaman beserta meta paginasi."
+      }
+    },
+    {
+      "name": "Filter Status Terlambat",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/loans?status=Terlambat",
+          "host": ["{{baseUrl}}"],
+          "path": ["loans"],
+          "query": [{ "key": "status", "value": "Terlambat" }]
+        },
+        "description": "Fitur filter query: GET /loans?status=Terlambat"
+      }
+    },
+    {
+      "name": "Filter Status Dipinjam",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/loans?status=Dipinjam",
+          "host": ["{{baseUrl}}"],
+          "path": ["loans"],
+          "query": [{ "key": "status", "value": "Dipinjam" }]
+        },
+        "description": "Filter berdasarkan status Dipinjam."
+      }
+    },
+    {
+      "name": "Filter Status Dikembalikan",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/loans?status=Dikembalikan",
+          "host": ["{{baseUrl}}"],
+          "path": ["loans"],
+          "query": [{ "key": "status", "value": "Dikembalikan" }]
+        },
+        "description": "Filter berdasarkan status Dikembalikan."
+      }
+    },
+    {
+      "name": "Pencarian Bebas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/loans?search=bumi",
+          "host": ["{{baseUrl}}"],
+          "path": ["loans"],
+          "query": [{ "key": "search", "value": "bumi" }]
+        },
+        "description": "Mencari pada nama anggota, nomor anggota, dan judul buku."
+      }
+    },
+    {
+      "name": "Detail Peminjaman",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/loans/{{loanId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["loans", "{{loanId}}"]
+        },
+        "description": "Mengambil detail satu peminjaman berdasarkan id (UUID).\n\nIsi variabel `loanId` terlebih dahulu (mis. dari hasil List Peminjaman)."
+      }
+    },
+    {
+      "name": "Buat Peminjaman",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const json = pm.response.json();",
+              "if (json && json.data && json.data.id) {",
+              "  pm.collectionVariables.set('loanId', json.data.id);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"member_name\": \"Rina Marlina\",\n  \"member_number\": \"M010\",\n  \"book_title\": \"Pulang\",\n  \"book_code\": \"BK-010\",\n  \"loan_date\": \"2026-09-20\",\n  \"due_date\": \"2026-10-04\",\n  \"notes\": \"Peminjaman pertama\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/loans",
+          "host": ["{{baseUrl}}"],
+          "path": ["loans"]
+        },
+        "description": "Membuat data peminjaman baru. Status dihitung otomatis.\n\nScript test otomatis menyimpan id hasil response ke variabel `loanId`."
+      }
+    },
+    {
+      "name": "Perbarui Peminjaman (kembalikan buku)",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"return_date\": \"2026-10-02\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/loans/{{loanId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["loans", "{{loanId}}"]
+        },
+        "description": "Memperbarui data peminjaman. Field yang tidak dikirim memakai nilai lama."
+      }
+    },
+    {
+      "name": "Hapus Peminjaman",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/loans/{{loanId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["loans", "{{loanId}}"]
+        },
+        "description": "Menghapus data peminjaman berdasarkan id."
+      }
+    },
+    {
+      "name": "Sinkronisasi Status Terlambat",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/loans/sync-overdue",
+          "host": ["{{baseUrl}}"],
+          "path": ["loans", "sync-overdue"]
+        },
+        "description": "Menandai semua peminjaman yang melewati jatuh tempo sebagai Terlambat."
+      }
+    }
+  ]
+}
