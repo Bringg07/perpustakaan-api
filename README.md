@@ -4,11 +4,14 @@ REST API sederhana untuk layanan **pencatatan peminjaman buku perpustakaan**. Di
 **Node.js + Express.js** dan menggunakan **Supabase (PostgreSQL)** sebagai basis data, serta
 siap di-*deploy* ke **Vercel**.
 
-> **Link Deployment (Vercel):** <!-- ISI SETELAH DEPLOY -->
-> `https://NAMA-PROYEK.vercel.app`
+> **Link Deployment (Vercel):**
+> `https://perpustakaan-api.vercel.app`
 >
-> **Link Repository GitHub:** <!-- ISI SETELAH PUSH -->
-> `https://github.com/USERNAME/perpustakaan-api`
+> ⚠️ Status 01-10-2026: URL di atas **belum live** (`DEPLOYMENT_NOT_FOUND` saat dicek
+> `/health`). Lakukan deploy ulang sesuai **Bagian 7**, lalu URL ini akan aktif.
+>
+> **Link Repository GitHub:**
+> `https://github.com/Bringg07/perpustakaan-api`
 
 ---
 
@@ -155,7 +158,7 @@ kebijakan RLS, dan **7 baris data contoh**.
 ## 5. Dokumentasi Endpoint
 
 **Base URL lokal:** `http://localhost:3000`
-**Base URL produksi:** `https://NAMA-PROYEK.vercel.app`
+**Base URL produksi:** `https://perpustakaan-api.vercel.app`
 
 > Seluruh endpoint tersedia di **root** (`/loans`) **dan** dengan prefiks **`/api`**
 > (`/api/loans`). Gunakan salah satu; keduanya memberikan hasil yang sama.
@@ -459,7 +462,7 @@ POST /loans/sync-overdue
 
 **1) Clone repository**
 ```bash
-git clone https://github.com/USERNAME/perpustakaan-api.git
+git clone https://github.com/Bringg07/perpustakaan-api.git
 cd perpustakaan-api
 ```
 
@@ -537,7 +540,7 @@ Import file **`postman/perpustakaan-api.postman_collection.json`** ke Postman.
 Koleksi ini berisi **11 request** siap pakai untuk seluruh endpoint.
 Ubah variabel koleksi `baseUrl` sesuai target:
 - Lokal  : `http://localhost:3000`
-- Vercel : `https://NAMA-PROYEK.vercel.app`
+- Vercel : `https://perpustakaan-api.vercel.app`
 
 Request **Buat Peminjaman** otomatis menyimpan `id` hasil response ke variabel
 `loanId`, sehingga request Detail / Perbarui / Hapus bisa langsung dijalankan.
@@ -581,8 +584,8 @@ aplikasi Express:
 
 ### Verifikasi setelah deploy
 ```bash
-curl https://NAMA-PROYEK.vercel.app/health
-curl https://NAMA-PROYEK.vercel.app/loans?status=Terlambat
+curl https://perpustakaan-api.vercel.app/health
+curl https://perpustakaan-api.vercel.app/loans?status=Terlambat
 ```
 
 ---
@@ -597,7 +600,7 @@ git commit -m "feat: REST API pencatatan peminjaman buku (Express + Supabase)"
 
 # Buat repository kosong di github.com, lalu:
 git branch -M main
-git remote add origin https://github.com/USERNAME/perpustakaan-api.git
+git remote add origin https://github.com/Bringg07/perpustakaan-api.git
 git push -u origin main
 ```
 
